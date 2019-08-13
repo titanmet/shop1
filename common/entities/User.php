@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use phpDocumentor\Reflection\Types\String_;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -25,8 +26,18 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+
+    public function __construct(string $username, string $email, string $password)
+    {
+        $this->username = $username;
+        $this->email = $email;
+        $this->setPassword($password);
+        $this->created_at = time();
+        $this->status = self::STATUS_ACTIVE;
+        $this->generateAuthKey();
+        parent::__construct();
+    }
 
 
     /**
