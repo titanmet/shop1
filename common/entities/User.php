@@ -1,5 +1,5 @@
 <?php
-namespace common\models;
+namespace common\entities;
 
 use phpDocumentor\Reflection\Types\String_;
 use Yii;
@@ -25,6 +25,8 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    use InstantiateTrait;
+
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
