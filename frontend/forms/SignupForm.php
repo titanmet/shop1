@@ -48,7 +48,7 @@ class SignupForm extends Model
             return null;
         }
         
-        $user = new User($this->username, $this->email, $this->password);
+        $user = User::signap($this->username, $this->email, $this->password);
 //        $user->generateAuthKey();
 //        $user->generateEmailVerificationToken();
         return $user->save() ? $user : null;
