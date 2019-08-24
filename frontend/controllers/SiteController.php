@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\entities\User;
 use frontend\forms\ResendVerificationEmailForm;
 use frontend\forms\VerifyEmailForm;
+use frontend\services\auth\SignupService;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
