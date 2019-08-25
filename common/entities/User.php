@@ -27,19 +27,29 @@ class User extends ActiveRecord implements IdentityInterface
 {
     use InstantiateTrait;
 
-    const STATUS_DELETED = 0;
+    const STATUS_WAIT = 0;
     const STATUS_ACTIVE = 10;
 
-    public static function signup(string $username, string $email, string $password): self
+    public static function requestSignup(string $username, string $email, string $password): self
     {
         $user = new static();
         $user->username = $username;
         $user->email = $email;
         $user->setPassword($password);
         $user->created_at = time();
-        $user->status = self::STATUS_ACTIVE;
+        $user->status = self::STATUS_WAIT;
+        $user->generateEmailConfirmToken();
         $user->generateAuthKey();
         return $user;
+    }
+
+    public function confirmSignup(): void
+    {
+        if (!$this->isWait()) {
+            throw new \DomainException('User is already active.');
+        }
+        $this->status = self::STATUS_ACTIVE;
+        $this->removeEmailConfirmToken();
     }
 
     public function requestPasswordReset(): void
@@ -56,6 +66,11 @@ class User extends ActiveRecord implements IdentityInterface
         }
         $this->setPassword($password);
         $this->password_reset_token = null;
+    }
+
+    public function isWait(): bool
+    {
+        return $this->status === self::STATUS_WAIT;
     }
 
 
@@ -87,8 +102,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_WAIT]],
         ];
     }
 
@@ -202,11 +216,7 @@ class User extends ActiveRecord implements IdentityInterface
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
-    /**
-     * Generates password hash from password and sets it to the model
-     *
-     * @param string $password
-     */
+
     private function setPassword($password)
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
@@ -239,5 +249,17 @@ class User extends ActiveRecord implements IdentityInterface
     private function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    private function generateEmailConfirmToken()
+    {
+        $this->email_confirm_token = Yii::$app->security->generateRandomString();
+    }
+    /**
+     * Removes email confirm token
+     */
+    private function removeEmailConfirmToken()
+    {
+        $this->email_confirm_token = null;
     }
 }
