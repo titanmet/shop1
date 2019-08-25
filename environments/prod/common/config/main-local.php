@@ -11,6 +11,9 @@ return [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
+            'messageConfig' => [
+                'from' => ['titanmet@mail.ru' => 'Shop']
+            ],
         ],
     ],
 ];

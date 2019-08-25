@@ -6,12 +6,6 @@ use frontend\forms\ResetPasswordForm;
 use Yii;
 class PasswordResetService
 {
-    private $supportEmail;
-
-    public function __construct($supportEmail)
-    {
-        $this->supportEmail = $supportEmail;
-    }
 
     public function request(PasswordResetRequestForm $form): void
     {
@@ -33,7 +27,7 @@ class PasswordResetService
                 ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
                 ['user' => $user]
             )
-            ->setFrom($this->supportEmail)
+
             ->setTo($user->email)
             ->setSubject('Password reset for ' . Yii::$app->name)
             ->send();
