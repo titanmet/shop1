@@ -123,7 +123,6 @@ class SiteController extends Controller
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
-            $form->password = '';
 
             return $this->render('login', [
                 'model' => $form,
