@@ -1,5 +1,5 @@
 <?php
- namespace common\entities;
+ namespace shop\entities;
  trait InstantiateTrait
  {
      private static $_prototype;

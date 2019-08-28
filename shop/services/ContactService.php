@@ -1,7 +1,8 @@
 <?php
-namespace shop\services\contact;
+namespace shop\services;
 use shop\forms\ContactForm;
 use yii\mail\MailerInterface;
+
 class ContactService
 {
     private $supportEmail;
