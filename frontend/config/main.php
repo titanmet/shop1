@@ -18,11 +18,12 @@ return [
         'user' => [
             'identityClass' => 'shop\entities\User',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity', 'httpOnly' => true, '
+            domain' => $params['cookieDomain']],
+            'loginUrl' => ['auth/auth/login'],
         ],
         'session' => [
-            // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
+            'name' => '_session',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
