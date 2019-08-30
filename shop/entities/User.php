@@ -1,5 +1,5 @@
 <?php
-namespace shop\entities;
+namespace shop\entities\User;
 
 use phpDocumentor\Reflection\Types\String_;
 use Yii;
