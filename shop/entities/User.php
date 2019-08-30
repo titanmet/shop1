@@ -1,7 +1,6 @@
 <?php
 namespace shop\entities\User;
 
-use phpDocumentor\Reflection\Types\String_;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
