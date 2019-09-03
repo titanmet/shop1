@@ -1,4 +1,5 @@
 <?php
+use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
 /* @var $this yii\web\View */
@@ -15,22 +16,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    <div class="box">
+        <div class="box-body">
+            <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
             'id',
+            'created_at:datetime',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
-            // 'email:email',
-            // 'email_confirm_token:email',
-            // 'status',
-            // 'created_at',
-            // 'updated_at',
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+            'email:email',
+            'status',
+           ['class' => ActionColumn::class],
+            ],
+                ]); ?>
+        </div>
+    </div>
 </div>
