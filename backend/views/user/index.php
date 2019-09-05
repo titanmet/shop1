@@ -1,4 +1,5 @@
 <?php
+use kartik\date\DatePicker;
 use shop\entities\User\User;
 use shop\helpers\UserHelper;
 use yii\grid\ActionColumn;
@@ -20,7 +21,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterModel' => $searchModel,
             'columns' => [
             'id',
-            'created_at:datetime',
+                [
+                    'attribute' => 'created_at',
+                    'filter' => DatePicker::widget([
+                        'model' => $searchModel,
+                        'attribute' => 'date_from',
+                        'attribute2' => 'date_to',
+                        'type' => DatePicker::TYPE_RANGE,
+                        'separator' => '-',
+                        'pluginOptions' => [
+                            'todayHighlight' => true,
+                            'autoclose'=>true,
+                            'format' => 'yyyy-mm-dd',
+                        ],
+                    ]),
+                    'format' => 'datetime',
+                ],
                 [
                     'attribute' => 'username',
                     'value' => function (User $model) {
