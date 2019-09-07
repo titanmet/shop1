@@ -101,8 +101,8 @@ public function actionUpdate($id)
 
 public function actionDelete($id)
 {
-$this->findModel($id)->delete();
-return $this->redirect(['index']);
+    $this->service->remove($id);
+    return $this->redirect(['index']);
 }
 /**
 * Finds the User model based on its primary key value.
