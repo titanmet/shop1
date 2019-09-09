@@ -11,7 +11,7 @@ return [
     'components' => [
         'cache' => [
             'class' => 'yii\caching\MemCache',
-            'useMemcached' => true,
+            'useMemcached' => false,
         ],
     ],
 ];
