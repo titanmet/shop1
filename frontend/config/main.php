@@ -13,11 +13,9 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
-            'enableCookieValidation' => false,
-            'cookieValidationKey' => '',
-            #'enableCookieValidation' => true,
+            'enableCookieValidation' => true,
             'csrfParam' => '_csrf-frontend',
-            #'cookieValidationKey' => $params['cookieValidationKey'],
+            'cookieValidationKey' => $params['cookieValidationKey'],
         ],
         'user' => [
             'identityClass' => 'shop\entities\User\User',

@@ -15,9 +15,7 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
-            'enableCookieValidation' => false,
-            'cookieValidationKey' => '',
-            #'cookieValidationKey' => $params['cookieValidationKey'],
+            'cookieValidationKey' => $params['cookieValidationKey'],
         ],
         'user' => [
             'identityClass' => 'shop\entities\User\User',
