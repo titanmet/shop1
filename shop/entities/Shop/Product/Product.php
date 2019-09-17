@@ -73,6 +73,31 @@ class Product extends ActiveRecord implements AggregateRoot
         $this->category_id = $categoryId;
     }
 
+    public function setValue($id, $value): void
+    {
+        $values = $this->values;
+        foreach ($values as $val) {
+            if ($val->isForCharacteristic($id)) {
+                $val->change($value);
+                $this->values = $values;
+                return;
+            }
+        }
+        $values[] = Value::create($id, $value);
+        $this->values = $values;
+    }
+    public function getValue($id): Value
+    {
+        $values = $this->values;
+        foreach ($values as $val) {
+            if ($val->isForCharacteristic($id)) {
+                return $val;
+            }
+        }
+        return Value::blank($id);
+    }
+
+
     public function activate(): void
     {
         if ($this->isActive()) {
@@ -149,32 +174,7 @@ class Product extends ActiveRecord implements AggregateRoot
         return $this->meta->title ?: $this->name;
     }
 
-    public function setValue($id, $value): void
-    {
-        $values = $this->values;
-        foreach ($values as $val) {
-            if ($val->isForCharacteristic($id)) {
-                $val->change($value);
-                $this->values = $values;
-                return;
-            }
-        }
-        $values[] = Value::create($id, $value);
-        $this->values = $values;
-    }
 
-    public function getValue($id): Value
-    {
-        $values = $this->values;
-        foreach ($values as $val) {
-            if ($val->isForCharacteristic($id)) {
-                return $val;
-            }
-        }
-        return Value::blank($id);
-    }
-
-    // Modification
 
     public function getModification($id): Modification
     {
