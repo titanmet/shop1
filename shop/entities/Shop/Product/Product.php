@@ -19,6 +19,7 @@ use yii\db\Exception;
 use yii\web\UploadedFile;
 
 
+
 class Product extends ActiveRecord implements AggregateRoot
 {
     use EventTrait;
