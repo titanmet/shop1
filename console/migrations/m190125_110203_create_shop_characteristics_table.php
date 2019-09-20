@@ -3,7 +3,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `shop_characteristics`.
  */
-class m190124_110200_create_shop_characteristics_table extends Migration
+class m190125110203_create_shop_characteristics_table extends Migration
 {
     public function up()
     {

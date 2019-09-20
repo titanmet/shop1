@@ -209,6 +209,30 @@ class Product extends ActiveRecord implements AggregateRoot
         $this->updateModifications($modifications);
     }
 
+    public function assignRelatedProduct($id): void
+    {
+        $assignments = $this->relatedAssignments;
+        foreach ($assignments as $assignment) {
+            if ($assignment->isForProduct($id)) {
+                return;
+            }
+        }
+        $assignments[] = RelatedAssignment::create($id);
+        $this->relatedAssignments = $assignments;
+    }
+    public function revokeRelatedProduct($id): void
+    {
+        $assignments = $this->relatedAssignments;
+        foreach ($assignments as $i => $assignment) {
+            if ($assignment->isForProduct($id)) {
+                unset($assignments[$i]);
+                $this->relatedAssignments = $assignments;
+                return;
+            }
+        }
+        throw new \DomainException('Assignment is not found.');
+    }
+
     public function editModification($id, $code, $name, $price, $quantity): void
     {
         $modifications = $this->modifications;
@@ -242,6 +266,12 @@ class Product extends ActiveRecord implements AggregateRoot
             return $modification->quantity;
         }, $this->modifications)));
     }
+
+    public function getRelatedAssignments(): ActiveQuery
+    {
+        return $this->hasMany(RelatedAssignment::class, ['product_id' => 'id']);
+    }
+
 
     // Categories
 
@@ -377,30 +407,7 @@ class Product extends ActiveRecord implements AggregateRoot
 
     // Related products
 
-    public function assignRelatedProduct($id): void
-    {
-        $assignments = $this->relatedAssignments;
-        foreach ($assignments as $assignment) {
-            if ($assignment->isForProduct($id)) {
-                return;
-            }
-        }
-        $assignments[] = CategoryAssignment::create($id);
-        $this->relatedAssignments = $assignments;
-    }
 
-    public function revokeRelatedProduct($id): void
-    {
-        $assignments = $this->relatedAssignments;
-        foreach ($assignments as $i => $assignment) {
-            if ($assignment->isForProduct($id)) {
-                unset($assignments[$i]);
-                $this->relatedAssignments = $assignments;
-                return;
-            }
-        }
-        throw new \DomainException('Assignment is not found.');
-    }
 
     // Reviews
 
@@ -526,10 +533,6 @@ class Product extends ActiveRecord implements AggregateRoot
         return $this->hasOne(Photo::class, ['id' => 'main_photo_id']);
     }
 
-    public function getRelatedAssignments(): ActiveQuery
-    {
-        return $this->hasMany(RelatedAssignment::class, ['product_id' => 'id']);
-    }
 
     public function getRelateds(): ActiveQuery
     {

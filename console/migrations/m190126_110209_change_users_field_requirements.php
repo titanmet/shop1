@@ -1,6 +1,6 @@
 <?php
 use yii\db\Migration;
-class m190124_110200_change_users_field_requirements extends Migration
+class m190126110209_change_users_field_requirements extends Migration
 {
     public function up()
     {

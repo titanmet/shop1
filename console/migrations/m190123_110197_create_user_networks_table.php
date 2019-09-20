@@ -1,6 +1,6 @@
 <?php
 use yii\db\Migration;
-class m190124_110200_create_user_networks_table extends Migration
+class m190123110197_create_user_networks_table extends Migration
 {
     public function up()
     {

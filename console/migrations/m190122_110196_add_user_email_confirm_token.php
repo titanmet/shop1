@@ -1,6 +1,6 @@
 <?php
 use yii\db\Migration;
-class m190124_110200_add_user_email_confirm_token extends Migration
+class m190122110196_add_user_email_confirm_token extends Migration
 {
     public function up()
     {

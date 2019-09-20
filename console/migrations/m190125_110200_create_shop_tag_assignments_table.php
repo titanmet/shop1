@@ -1,6 +1,6 @@
 <?php
 use yii\db\Migration;
-class m190124_110200_create_shop_tag_assignments_table extends Migration
+class m190125_110200_create_shop_tag_assignments_table extends Migration
 {
     public function up()
     {
