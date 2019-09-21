@@ -19,7 +19,6 @@ use yii\db\Exception;
 use yii\web\UploadedFile;
 
 
-
 class Product extends ActiveRecord implements AggregateRoot
 {
     use EventTrait;
@@ -87,6 +86,7 @@ class Product extends ActiveRecord implements AggregateRoot
         $values[] = Value::create($id, $value);
         $this->values = $values;
     }
+
     public function getValue($id): Value
     {
         $values = $this->values;
@@ -176,7 +176,6 @@ class Product extends ActiveRecord implements AggregateRoot
     }
 
 
-
     public function getModification($id): Modification
     {
         foreach ($this->modifications as $modification) {
@@ -220,6 +219,7 @@ class Product extends ActiveRecord implements AggregateRoot
         $assignments[] = RelatedAssignment::create($id);
         $this->relatedAssignments = $assignments;
     }
+
     public function revokeRelatedProduct($id): void
     {
         $assignments = $this->relatedAssignments;
@@ -406,7 +406,6 @@ class Product extends ActiveRecord implements AggregateRoot
     }
 
     // Related products
-
 
 
     // Reviews
