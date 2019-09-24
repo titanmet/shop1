@@ -17,6 +17,12 @@ class ProductRepository
             throw new \RuntimeException('Saving error.');
         }
     }
+
+    public function existsByBrand($id): bool
+    {
+        return Product::find()->andWhere(['brand_id' => $id])->exists();
+    }
+
     public function remove(Product $product): void
     {
         if (!$product->delete()) {
